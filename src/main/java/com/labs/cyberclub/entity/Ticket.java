@@ -1,11 +1,13 @@
 package com.labs.cyberclub.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tickets")
+@Table(name = "tickets", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
 public class Ticket {
 
     @Id
@@ -13,7 +15,8 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private boolean isDota;
+    @NotBlank(message = "Название билета не должно быть пустым.")
+    private String name;
 
     @NotNull(message = "Введите цену.")
     @Min(value = 0, message = "Цена должна быть больше нуля.")
@@ -26,8 +29,8 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(boolean isDota, int price, User user) {
-        this.isDota = isDota;
+    public Ticket(String name, int price, User user) {
+        this.name = name;
         this.price = price;
         this.user = user;
     }
@@ -35,31 +38,24 @@ public class Ticket {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
-    public boolean isDota() {
-        return isDota;
+    public String getName() {
+        return name;
     }
-
-    public void setDota(boolean dota) {
-        isDota = dota;
+    public void setName(String name) {
+        this.name = name;
     }
-
     public int getPrice() {
         return price;
     }
-
     public void setPrice(int price) {
         this.price = price;
     }
-
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }

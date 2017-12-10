@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "teams")
+@Table(name = "teams", uniqueConstraints = @UniqueConstraint(columnNames = {"id", "name"}))
 public class Team {
 
     @Id
@@ -15,7 +15,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Укажите название команды")
+    @NotBlank(message = "Укажите название команды.")
     @Length(min = 2, message = "Название должно быть не меньше 2 символов.")
     private String name;
 
@@ -23,8 +23,12 @@ public class Team {
     @Length(min = 20, message = "Опишите себя не менее, чем 20 символами.")
     private String description;
 
-   /* @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private Set<User> players;*/
+    @OneToMany(mappedBy = "team")
+    private Set<User> players;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
     public Team() {
     }
@@ -32,6 +36,19 @@ public class Team {
     public Team(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Team(String name, String description, Set<User> players) {
+        this.name = name;
+        this.description = description;
+        this.players = players;
+    }
+
+    public Team(String name, String description, Set<User> players, Tournament tournament) {
+        this.name = name;
+        this.description = description;
+        this.players = players;
+        this.tournament = tournament;
     }
 
     public int getId() {
@@ -52,10 +69,16 @@ public class Team {
     public void setDescription(String description) {
         this.description = description;
     }
-   /* public Set<User> getPlayers() {
+    public Set<User> getPlayers() {
         return players;
     }
     public void setPlayers(Set<User> players) {
         this.players = players;
-    }*/
+    }
+    public Tournament getTournament() {
+        return tournament;
+    }
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 }
