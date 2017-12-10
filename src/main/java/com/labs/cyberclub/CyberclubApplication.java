@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CyberclubApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CyberclubApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CyberclubApplication.class, args);
+    }
+
 }

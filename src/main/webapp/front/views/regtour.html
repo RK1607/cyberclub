@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html";
+charset=UTF-8"/>
+<meta name="keywords" content="test, site, website"/>
+<meta name="description"content="Proba"/>
+<link href="../../../resources/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="../../../resources/image/cicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<title>Cyber Club</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>	
+	<script>
+		$(document).ready (function() {
+			$("send").click(function() {
+				var teamname = $("#teamname").val();
+				var email = $("#email").val();
+				var namefirst = $("#namefirst").val();
+				var namesecond = $("#namesecond").val();
+				var nicknamefirst = $("#nicknamefirst").val();
+				var nicknamesecond = $("#nicknamesecond").val();
+				var message = $("#message").val();
+				var fail="";
+				if (namefirst.length < 3) fail=" Обязательно к заполнению! не мение 3 символов";
+				else if (email.split('@').length-1==0 || email.split('.').length-1==0)
+					fail= "Вы ввели некорректный email";
+				else if (message.length<20)
+					fail= "Расскажите о команде (не мение 20 символов)";
+				if (fail !="") {
+					$('#messageShow').html(fail+"<div class='clear'><br></div>");
+					$('#messageShow').show();
+					return false;
+						}
+				$.ajax ({
+					url: '/ajax/regtour.php',
+					type: 'POST',
+					cache: false,
+					data: {'teamname': teamname, 'email':email, 'namefirst': namefirst, 'namesecond':namesecond, 'nicknamefirst':nicknamefirst,'nicknamesecond':nicknamesecond, 'message':message},
+					dataType: 'html',
+					success: function (data){
+						
+								}
+})
+					});
+		});			
+	</script>
+</head>
+<body>
+<header>
+<a href="index.jsp" title="Главное меню" id="logo">Cyber Club</a><span class="contact">
+<a href="about.jsp" title="Информация о нас"> О нас</a></span>
+<input type="text"class="field"placeholder="Поиск"/><span class="right"><span class="contact">
+<a href="reg.html" title="Присоединись">Регистрация</a></span>
+<span class="contact"><a href="auth.html" title="Enter">Вход</a></span></span>
+</header>
+<div class="clear"><br/></div>
+<center>
+<div id="menu"> Разделы<hr/></div>
+<div id="menuHrefs">
+	<a href="price.jsp">Цены</a>
+	<a href="workday.jsp">Режим работы</a>
+	<a href="map.jsp">Карта проезда</a>
+	<a href="tournaments.html">Турниры</a>
+</div>
+</center>
+<div id="wrapper">
+	<div id="articles">
+		<form action="" method="post">
+			
+			<label for="teamname">Название команды</label>
+			<input type="text"id="teamname"name="teamname"placeholder="Название команды"/>
+			<label for="email">Email</label>
+			<input type="email"id="email"name="email"placeholder="adress@example.com"/>
+			<label for="namefirst">Ф.И.О 1-го игрока</label>
+			<input type="text"id="namefirst"name="namefirst"placeholder="Ф.И.О"/>
+			<label for="namesecond">Ф.И.О 2-го игрока</label>
+			<input type="text"id="namesecond"name="namesecond"placeholder="Ф.И.О"/>
+			<label for="nicknamefirst">Никнейм 1-го игрока</label>
+			<input type="text"id="nicknamefirst"name="nicknamefirst"placeholder="Nickname"/>
+			<label for="nicknamesecond">Никнейм 2-го игрока</label>
+			<input type="text"id="nicknamesecond"name="nicknamesecond"placeholder="Nickname"/>		
+			<label for="message">О команде</label>
+			<textarea placeholder="О команде"id="message"name="message"></textarea>
+			<div id="messageShow"></div>
+			<input type="submit"value="Зарегистрироваться"id="send"name="send"/>
+			
+		</form>
+	</div>
+</div>
+</div>
+ <footer>
+<span class="left">Все права защищены &copy; 2017</span>
+<span class="right"><img src="../../../resources/image/facebook.jpg" alt="Группа Facebook" title="Группа Facebook"/></span>
+<span class="right"><img src="../../../resources/image/twit.jpg" alt="Группа Twitter" title="Мы в Twitter"/></span>
+</footer>
+</body>
+</html>
